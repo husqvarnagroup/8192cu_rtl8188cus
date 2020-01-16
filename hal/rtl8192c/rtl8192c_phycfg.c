@@ -2459,9 +2459,9 @@ static void ccxPowerIndexCheck(
 	IN OUT u8*		ofdmPowerLevel
 	)
 {
+	HAL_DATA_TYPE		*pHalData = GET_HAL_DATA(Adapter);
 #if 0
 	PMGNT_INFO			pMgntInfo = &(Adapter->MgntInfo);
-	HAL_DATA_TYPE		*pHalData = GET_HAL_DATA(Adapter);
 	PRT_CCX_INFO		pCcxInfo = GET_CCX_INFO(pMgntInfo);
 
 	//
@@ -2513,13 +2513,13 @@ static void ccxPowerIndexCheck(
 		cckPowerLevel[0], ofdmPowerLevel[0] + pHalData->LegacyHTTxPowerDiff, ofdmPowerLevel[0]));
 	}
 
-	pHalData->CurrentCckTxPwrIdx = cckPowerLevel[0];
-	pHalData->CurrentOfdm24GTxPwrIdx = ofdmPowerLevel[0];
-
 	RT_TRACE(COMP_TXAGC, DBG_LOUD, 
 		("PHY_SetTxPowerLevel8192S(): CCK Tx power index : %d, Legacy OFDM Tx power index: %d, OFDM Tx power index: %d\n", 
 		cckPowerLevel[0], ofdmPowerLevel[0] + pHalData->LegacyHTTxPowerDiff, ofdmPowerLevel[0]));
 #endif	
+
+	pHalData->CurrentCckTxPwrIdx = cckPowerLevel[0];
+	pHalData->CurrentOfdm24GTxPwrIdx = ofdmPowerLevel[0];
 }
 /*-----------------------------------------------------------------------------
  * Function:    SetTxPowerLevel8190()
@@ -2555,8 +2555,11 @@ PHY_SetTxPowerLevel8192C(
 		return;
 
 	getTxPowerIndex(Adapter, channel, &cckPowerLevel[0], &ofdmPowerLevel[0]);
-	//RTPRINT(FPHY, PHY_TXPWR, ("Channel-%d, cckPowerLevel (A / B) = 0x%x / 0x%x,   ofdmPowerLevel (A / B) = 0x%x / 0x%x\n", 
-	//	channel, cckPowerLevel[0], cckPowerLevel[1], ofdmPowerLevel[0], ofdmPowerLevel[1]));
+	dev_info(
+		&Adapter->dvobj->pusbdev->dev,
+		"Channel-%d, cckPowerLevel (A / B) = 0x%x / 0x%x,   ofdmPowerLevel (A / B) = 0x%x / 0x%x\n",
+		channel, cckPowerLevel[0], cckPowerLevel[1], ofdmPowerLevel[0],
+		ofdmPowerLevel[1]);
 
 	ccxPowerIndexCheck(Adapter, channel, &cckPowerLevel[0], &ofdmPowerLevel[0]);
 
@@ -2616,7 +2619,10 @@ PHY_UpdateTxPowerDbm8192C(
 	else
 		OfdmTxPwrIdx = 0;
 
-	//RT_TRACE(COMP_TXAGC, DBG_LOUD, ("PHY_UpdateTxPowerDbm8192S(): %ld dBm , CckTxPwrIdx = %d, OfdmTxPwrIdx = %d\n", powerInDbm, CckTxPwrIdx, OfdmTxPwrIdx));
+	dev_info(
+		&Adapter->dvobj->pusbdev->dev,
+		"PHY_UpdateTxPowerDbm8192S(): %d dBm , CckTxPwrIdx = 0x%x, OfdmTxPwrIdx = 0x%x\n",
+		powerInDbm, CckTxPwrIdx, OfdmTxPwrIdx);
 
 	for(idx = 0; idx < 14; idx++)
 	{

@@ -26,6 +26,8 @@
 #include <rtw_ioctl_set.h>
 #include <rtw_ioctl_query.h>
 #include <xmit_osdep.h>
+#include <Hal8192CPhyCfg.h>
+#include <rtl8192c_hal.h>
 
 #ifdef CONFIG_IOCTL_CFG80211
 
@@ -3040,9 +3042,10 @@ static int cfg80211_rtw_set_txpower(struct wiphy *wiphy,
 	enum tx_power_setting type, int dbm)
 #endif
 {
-#if 0
-	struct iwm_priv *iwm = wiphy_to_iwm(wiphy);
-	int ret;
+	DBG_8192C("%s\n", __func__);
+
+	_adapter *padapter = wiphy_to_adapter(wiphy);
+	HAL_DATA_TYPE *pHalData = GET_HAL_DATA(padapter);
 
 	switch (type) {
 	case NL80211_TX_POWER_AUTOMATIC:
@@ -3050,23 +3053,15 @@ static int cfg80211_rtw_set_txpower(struct wiphy *wiphy,
 	case NL80211_TX_POWER_FIXED:
 		if (mbm < 0 || (mbm % 100))
 			return -EOPNOTSUPP;
-
-		if (!test_bit(IWM_STATUS_READY, &iwm->status))
-			return 0;
-
-		ret = iwm_umac_set_config_fix(iwm, UMAC_PARAM_TBL_CFG_FIX,
-					      CFG_TX_PWR_LIMIT_USR,
-					      MBM_TO_DBM(mbm) * 2);
-		if (ret < 0)
-			return ret;
-
-		return iwm_tx_power_trigger(iwm);
+		break;
 	default:
-		IWM_ERR(iwm, "Unsupported power type: %d\n", type);
+		dev_err(&wiphy->dev, "%s: Unsupported power type: %d\n", __func__, (int)type);
 		return -EOPNOTSUPP;
 	}
-#endif
-	DBG_8192C("%s\n", __func__);
+
+	PHY_UpdateTxPowerDbm8192C(padapter, MBM_TO_DBM(mbm));
+	PHY_SetTxPowerLevel8192C(padapter, pHalData->CurrentChannel);
+
 	return 0;
 }
 
@@ -3076,9 +3071,11 @@ static int cfg80211_rtw_get_txpower(struct wiphy *wiphy,
 #endif
 	int *dbm)
 {
+	_adapter *padapter = wiphy_to_adapter(wiphy);
+
 	DBG_8192C("%s\n", __func__);
 
-	*dbm = (12);
+	PHY_GetTxPowerLevel8192C(padapter, dbm);
 	
 	return 0;
 }

@@ -2678,6 +2678,23 @@ exit:
 	
 }
 
+static int rtw_wx_set_txpow(struct net_device *dev,
+			    struct iw_request_info *info,
+			    union iwreq_data *wrqu, char *extra)
+{
+	int ret = 0;
+	unsigned mode = 0;
+	_adapter *padapter = (_adapter *)rtw_netdev_priv(dev);
+	int *pdata = (int *)wrqu;
+	int dBm;
+
+	dBm = *pdata;
+
+	printk("[%s] Set TX power to %ddBm \n", __FUNCTION__, dBm);
+	PHY_UpdateTxPowerDbm8192C(padapter, dBm);
+	return ret;
+}
+
 static int rtw_wx_set_rate(struct net_device *dev, 
 			      struct iw_request_info *a,
 			      union iwreq_data *wrqu, char *extra)
@@ -12330,7 +12347,7 @@ static iw_handler rtw_handlers[] =
 	rtw_wx_get_rts,			/* SIOCGIWRTS */
 	rtw_wx_set_frag,		/* SIOCSIWFRAG */
 	rtw_wx_get_frag,		/* SIOCGIWFRAG */
-	dummy,					/* SIOCSIWTXPOW */
+	rtw_wx_set_txpow,		/* SIOCSIWTXPOW */
 	dummy,					/* SIOCGIWTXPOW */
 	dummy,					/* SIOCSIWRETRY */
 	rtw_wx_get_retry,		/* SIOCGIWRETRY */
