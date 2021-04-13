@@ -42,7 +42,8 @@ CONFIG_INTEL_WIDI = n
 CONFIG_WAKE_ON_WLAN = n
 CONFIG_ODM_ADAPTIVITY = n
 
-CONFIG_PLATFORM_I386_PC = y
+CONFIG_PLATFORM_I386_PC = n
+CONFIG_PLATFORM_ARM_AT91SAM9G25 = y
 CONFIG_PLATFORM_TI_AM3517 = n
 CONFIG_PLATFORM_ANDROID_X86 = n
 CONFIG_PLATFORM_JB_X86 = n
@@ -261,6 +262,12 @@ KVER  := $(shell uname -r)
 KSRC := /lib/modules/$(KVER)/build
 MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless/
 INSTALL_PREFIX :=
+endif
+
+ifeq ($(CONFIG_PLATFORM_ARM_AT91SAM9G25), y)
+EXTRA_CFLAGS += -DCONFIG_LITTLE_ENDIAN
+EXTRA_CFLAGS += -DCONFIG_IOCTL_CFG80211 -DRTW_USE_CFG80211_STA_EVENT
+KSRC := $(KERNEL_SRC)
 endif
 
 ifeq ($(CONFIG_PLATFORM_TI_AM3517), y)
@@ -736,6 +743,9 @@ strip:
 install:
 	install -p -m 644 $(MODULE_NAME).ko  $(MODDESTDIR)
 	/sbin/depmod -a ${KVER}
+
+modules_install:
+	$(MAKE) -C $(KERNEL_SRC) M=$(PWD) modules_install
 
 uninstall:
 	rm -f $(MODDESTDIR)/$(MODULE_NAME).ko
