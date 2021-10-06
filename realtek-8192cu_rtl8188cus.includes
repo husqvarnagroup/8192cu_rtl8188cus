@@ -1,0 +1,7 @@
+hal
+hal/OUTSRC
+include
+include/byteorder
+include/linux
+os_dep/linux
+platform
