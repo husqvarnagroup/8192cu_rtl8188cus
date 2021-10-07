@@ -5,3 +5,5 @@
 *.mod.c
 *.order
 *.symvers
+*.d
+compile_commands.json
