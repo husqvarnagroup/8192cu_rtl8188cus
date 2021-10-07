@@ -256,7 +256,7 @@ static void _rtw_reg_apply_radar_flags(struct wiphy *wiphy)
 {
 	struct ieee80211_supported_band *sband;
 	struct ieee80211_channel *ch;
-	unsigned int i;
+	int i;
 
 	if (!wiphy->bands[NL80211_BAND_5GHZ])
 		return;
