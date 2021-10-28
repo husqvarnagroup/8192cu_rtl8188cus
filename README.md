@@ -8,5 +8,7 @@ The code is based on the last release of the Realtek 8192cu driver
 and use the cfg80211 and nl80211 subsystems.
 
 ## Compilation
-* PC: `make CONFIG_PLATFORM_I386_PC=y`
+* PC:
+  * for currently running kernel: `make CONFIG_PLATFORM_I386_PC=y` (native)
+  * out of tree: `make KSRC=<path to Linux build directory> CONFIG_PLATFORM_I386_PC=y`
 * GARDENA smart gateway (ARMv5): `make CONFIG_PLATFORM_ARM_AT91SAM9G25=y`
