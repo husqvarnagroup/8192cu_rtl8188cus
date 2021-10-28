@@ -80,7 +80,7 @@ void mac_reg_dump(void *sel, _adapter *adapter)
 	for (i = 0; i < 0x800; i += 16) {
 		DBG_871X_SEL_NL(
 			sel,
-			"0x%03x: 0x%08x 0x%08x 0x%08x 0x%08x\n",
+			"0x%03x 0x%08x 0x%08x 0x%08x 0x%08x\n",
 			i, rtw_read32(adapter, i + 0),
 			rtw_read32(adapter, i + 4), rtw_read32(adapter, i + 8),
 			rtw_read32(adapter, i + 12));
@@ -95,7 +95,7 @@ void bb_reg_dump(void *sel, _adapter *adapter)
 	for (i = 0x800; i < 0x1000; i += 16) {
 		DBG_871X_SEL_NL(
 			sel,
-			"0x%03x: 0x%08x 0x%08x 0x%08x 0x%08x\n",
+			"0x%03x 0x%08x 0x%08x 0x%08x 0x%08x\n",
 			i, rtw_read32(adapter, i + 0),
 			rtw_read32(adapter, i + 4), rtw_read32(adapter, i + 8),
 			rtw_read32(adapter, i + 12));
@@ -123,7 +123,7 @@ void rf_reg_dump(void *sel, _adapter *adapter)
 		for (i = 0; i < 0x40; i += 4) {
 			DBG_871X_SEL_NL(
 				sel,
-				"0x%03x: 0x%08x 0x%08x 0x%08x 0x%08x\n",
+				"0x%02x 0x%08x 0x%08x 0x%08x 0x%08x\n",
 				i,
 				rtw_hal_read_rfreg(adapter, path, i,
 						   0xffffffff),
