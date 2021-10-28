@@ -74,60 +74,65 @@ void dump_log_level(void *sel)
 
 void mac_reg_dump(void *sel, _adapter *adapter)
 {
-	int i, j = 1;
+	int i;
 
-	DBG_871X_SEL_NL(sel, "======= MAC REG =======\n");
-
-	for(i=0x0;i<0x800;i+=4)
-	{
-		if(j%4==1)
-			DBG_871X_SEL_NL(sel, "0x%03x",i);
-		DBG_871X_SEL(sel, " 0x%08x ", rtw_read32(adapter,i));
-		if((j++)%4 == 0)
-			DBG_871X_SEL(sel, "\n");
+	DBG_871X_SEL_NL(sel, "======= MAC REG (8192cu) =======\n");
+	for (i = 0; i < 0x800; i += 16) {
+		DBG_871X_SEL_NL(
+			sel,
+			"0x%03x: 0x%08x 0x%08x 0x%08x 0x%08x\n",
+			i, rtw_read32(adapter, i + 0),
+			rtw_read32(adapter, i + 4), rtw_read32(adapter, i + 8),
+			rtw_read32(adapter, i + 12));
 	}
 }
 
 void bb_reg_dump(void *sel, _adapter *adapter)
 {
-	int i, j = 1;
+	int i;
 
-	DBG_871X_SEL_NL(sel, "======= BB REG =======\n");
-	for(i=0x800;i<0x1000;i+=4)
-	{
-		if(j%4==1)
-			DBG_871X_SEL_NL(sel, "0x%03x",i);
-		DBG_871X_SEL(sel, " 0x%08x ", rtw_read32(adapter,i));
-		if((j++)%4 == 0)
-			DBG_871X_SEL(sel, "\n");
+	DBG_871X_SEL_NL(sel, "======= BB REG (8192cu) =======\n");
+	for (i = 0x800; i < 0x1000; i += 16) {
+		DBG_871X_SEL_NL(
+			sel,
+			"0x%03x: 0x%08x 0x%08x 0x%08x 0x%08x\n",
+			i, rtw_read32(adapter, i + 0),
+			rtw_read32(adapter, i + 4), rtw_read32(adapter, i + 8),
+			rtw_read32(adapter, i + 12));
 	}
 }
 
 void rf_reg_dump(void *sel, _adapter *adapter)
 {
-	int i, j = 1, path;
-	u32 value;
+	int i, path;
 	u8 rf_type = 0;
 	u8 path_nums = 0;
 
 	rtw_hal_get_hwreg(adapter, HW_VAR_RF_TYPE, (u8 *)(&rf_type));
-	if((RF_1T2R == rf_type) ||(RF_1T1R ==rf_type ))
+	if ((RF_1T2R == rf_type) || (RF_1T1R == rf_type))
 		path_nums = 1;
 	else
 		path_nums = 2;
 
-	DBG_871X_SEL_NL(sel, "======= RF REG =======\n");
-
-	for (path=0;path<path_nums;path++) {
-		DBG_871X_SEL_NL(sel, "RF_Path(%x)\n",path);
-		for (i=0;i<0x100;i++) {
-			//value = PHY_QueryRFReg(adapter, (RF90_RADIO_PATH_E)path,i, bMaskDWord);
-			value = rtw_hal_read_rfreg(adapter, path, i, 0xffffffff);
-			if(j%4==1)
-				DBG_871X_SEL_NL(sel, "0x%02x ",i);
-			DBG_871X_SEL(sel, " 0x%08x ",value);
-			if((j++)%4==0)
-				DBG_871X_SEL(sel, "\n");
+	DBG_871X_SEL_NL(sel, "======== RF REG (8192cu) =======\n");
+	for (path = 0; path < path_nums; path++) {
+		if (path_nums > 1) {
+			DBG_871X_SEL_NL(sel, "RF_Path(%x)\n",
+					path);
+		}
+		for (i = 0; i < 0x40; i += 4) {
+			DBG_871X_SEL_NL(
+				sel,
+				"0x%03x: 0x%08x 0x%08x 0x%08x 0x%08x\n",
+				i,
+				rtw_hal_read_rfreg(adapter, path, i,
+						   0xffffffff),
+				rtw_hal_read_rfreg(adapter, path, i + 1,
+						   0xffffffff),
+				rtw_hal_read_rfreg(adapter, path, i + 2,
+						   0xffffffff),
+				rtw_hal_read_rfreg(adapter, path, i + 3,
+						   0xffffffff));
 		}
 	}
 }
