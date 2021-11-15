@@ -939,7 +939,7 @@ PHY_RFShadowCompareAll(
 
 	for (eRFPath = 0; eRFPath < RF6052_MAX_PATH; eRFPath++)
 	{
-		for (Offset = 0; Offset <= RF6052_MAX_REG; Offset++)
+		for (Offset = 0; Offset < RF6052_MAX_REG; Offset++)
 		{
 			PHY_RFShadowCompare(Adapter, (RF_RADIO_PATH_E)eRFPath, Offset);
 		}
@@ -957,7 +957,7 @@ PHY_RFShadowRecorverAll(
 
 	for (eRFPath = 0; eRFPath < RF6052_MAX_PATH; eRFPath++)
 	{
-		for (Offset = 0; Offset <= RF6052_MAX_REG; Offset++)
+		for (Offset = 0; Offset < RF6052_MAX_REG; Offset++)
 		{
 			PHY_RFShadowRecorver(Adapter, (RF_RADIO_PATH_E)eRFPath, Offset);
 		}
@@ -1001,7 +1001,7 @@ PHY_RFShadowCompareFlagSetAll(
 
 	for (eRFPath = 0; eRFPath < RF6052_MAX_PATH; eRFPath++)
 	{
-		for (Offset = 0; Offset <= RF6052_MAX_REG; Offset++)
+		for (Offset = 0; Offset < RF6052_MAX_REG; Offset++)
 		{
 			// 2008/11/20 MH For S3S4 test, we only check reg 26/27 now!!!!
 			if (Offset != 0x26 && Offset != 0x27)
@@ -1023,7 +1023,7 @@ PHY_RFShadowRecorverFlagSetAll(
 
 	for (eRFPath = 0; eRFPath < RF6052_MAX_PATH; eRFPath++)
 	{
-		for (Offset = 0; Offset <= RF6052_MAX_REG; Offset++)
+		for (Offset = 0; Offset < RF6052_MAX_REG; Offset++)
 		{
 			// 2008/11/20 MH For S3S4 test, we only check reg 26/27 now!!!!
 			if (Offset != 0x26 && Offset != 0x27)
@@ -1044,7 +1044,7 @@ PHY_RFShadowRefresh(
 
 	for (eRFPath = 0; eRFPath < RF6052_MAX_PATH; eRFPath++)
 	{
-		for (Offset = 0; Offset <= RF6052_MAX_REG; Offset++)
+		for (Offset = 0; Offset < RF6052_MAX_REG; Offset++)
 		{
 			RF_Shadow[eRFPath][Offset].Value = 0;
 			RF_Shadow[eRFPath][Offset].Compare = _FALSE;
