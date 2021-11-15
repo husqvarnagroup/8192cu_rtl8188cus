@@ -308,7 +308,7 @@
 
 #define CONFIG_PROC_DEBUG	1
 
-//#define DBG_IO
+#define DBG_IO
 //#define DBG_DELAY_OS
 //#define DBG_MEM_ALLOC
 //#define DBG_IOCTL
