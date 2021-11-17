@@ -22,7 +22,6 @@
  * Public  General Config
  */
 #define AUTOCONF_INCLUDED
-#define RTL871X_MODULE_NAME "92CU"
 #define DRV_NAME "rtl8192cu"
 
 #define CONFIG_USB_HCI	1
