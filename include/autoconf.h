@@ -22,7 +22,7 @@
  * Public  General Config
  */
 #define AUTOCONF_INCLUDED
-#define DRV_NAME "rtl8192cu"
+#define DRV_NAME "8192cu"
 
 #define CONFIG_USB_HCI	1
 

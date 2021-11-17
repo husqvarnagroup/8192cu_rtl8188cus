@@ -253,7 +253,7 @@ static struct usb_device_id rtl8192c_usb_id_tbl[] ={
 };
 
 struct rtw_usb_drv rtl8192c_usb_drv = {
-	.usbdrv.name = (char*)"rtl8192cu",
+	.usbdrv.name = (char*)"8192cu",
 	.usbdrv.probe = rtw_drv_init,
 	.usbdrv.disconnect = rtw_dev_remove,
 	.usbdrv.id_table = rtl8192c_usb_id_tbl,
