@@ -120,7 +120,7 @@ void rf_reg_dump(void *sel, _adapter *adapter)
 			DBG_871X_SEL_NL(sel, "RF REG (debugfs) RF_Path(%x)\n",
 					path);
 		}
-		for (i = 0; i < 0x100; i += 4) {
+		for (i = 0; i < 0x40; i += 4) {
 			DBG_871X_SEL_NL(
 				sel,
 				"RF REG (debugfs) 0x%03x: 0x%08x 0x%08x 0x%08x 0x%08x\n",
