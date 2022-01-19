@@ -4971,7 +4971,10 @@ rtl8192c_HalDmWatchDog(
 		if(pmlmepriv->LinkDetectInfo.bBusyTraffic == _FALSE)
 #endif //CONFIG_BUSY_TRAFFIC_SKIP_PWR_TRACK
 #endif
+
+#if 0
 			rtl8192c_dm_CheckTXPowerTracking(Adapter);
+#endif
 
 		//
 		// Rate Adaptive by Rx Signal Strength mechanism.
