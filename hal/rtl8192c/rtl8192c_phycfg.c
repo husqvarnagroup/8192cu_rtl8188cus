@@ -506,7 +506,9 @@ rtl8192c_PHY_QueryRFReg(
 
 	
 	Original_Value = phy_RFSerialRead(Adapter, eRFPath, RegAddr);
-	
+	dev_info(&Adapter->dvobj->pusbdev->dev, "%s(%02x, %u) = 0x%x\n",
+		 __func__, RegAddr, eRFPath, Original_Value);
+
 	BitShift =  phy_CalculateBitShift(BitMask);
 	Readback_Value = (Original_Value & BitMask) >> BitShift;	
 
@@ -581,7 +583,9 @@ rtl8192c_PHY_SetRFReg(
 		BitShift =  phy_CalculateBitShift(BitMask);
 		Data = ((Original_Value & (~BitMask)) | (Data<< BitShift));
 	}
-		
+
+	dev_info(&Adapter->dvobj->pusbdev->dev, "%s(%02x, %u) = 0x%x\n",
+		 __func__, RegAddr, eRFPath, Data);
 	phy_RFSerialWrite(Adapter, eRFPath, RegAddr, Data);
 	
 
