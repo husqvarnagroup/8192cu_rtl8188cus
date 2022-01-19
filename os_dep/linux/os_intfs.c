@@ -156,7 +156,7 @@ int rtw_hwpwrp_detect = 0; //HW power  ping detect 0:disable , 1:enable
 #endif
 
 #ifdef CONFIG_USB_HCI
-int rtw_hw_wps_pbc = 1;
+int rtw_hw_wps_pbc = 0;
 #else
 int rtw_hw_wps_pbc = 0;
 #endif
