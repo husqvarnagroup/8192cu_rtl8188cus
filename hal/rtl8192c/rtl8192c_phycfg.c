@@ -3968,7 +3968,7 @@ _PHY_IQCalibrate(
 		}
 		else if (i == (retryCount-1) && PathAOK == 0x01)	//Tx IQK OK
 		{
-			DBG_8192C("Path A IQK Only  Tx Success!!\n");
+			DBG_8192C("Path A IQK Only Tx Success!!\n");
 			
 			result[t][0] = (PHY_QueryBBReg(pAdapter, rTx_Power_Before_IQK_A, bMaskDWord)&0x3FF0000)>>16;
 			result[t][1] = (PHY_QueryBBReg(pAdapter, rTx_Power_After_IQK_A, bMaskDWord)&0x3FF0000)>>16;			
@@ -3997,7 +3997,7 @@ _PHY_IQCalibrate(
 			}
 			else if (i == (retryCount - 1) && PathBOK == 0x01)	//Tx IQK OK
 			{
-				DBG_8192C("Path B Only Tx IQK Success!!\n");
+				DBG_8192C("Path B IQK Only Tx Success!!\n");
 				result[t][4] = (PHY_QueryBBReg(pAdapter, rTx_Power_Before_IQK_B, bMaskDWord)&0x3FF0000)>>16;
 				result[t][5] = (PHY_QueryBBReg(pAdapter, rTx_Power_After_IQK_B, bMaskDWord)&0x3FF0000)>>16;
 			}
