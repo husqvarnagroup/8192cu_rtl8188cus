@@ -3483,7 +3483,7 @@ _PHY_PathA_IQK(
 		(((regEAC & 0x03FF0000)>>16) != 0x36))
 		result |= 0x02;
 	else
-		DBG_8192C("Path A Rx IQK fail!!\n");
+		DBG_8192C("Path A Rx IQK failed!!\n");
 	
 	return result;
 
@@ -4660,7 +4660,7 @@ rtl8192c_PHY_IQCalibrate(
 		return;
 	}
 	IQK_process_time = rtw_get_current_time();
-	DBG_8192C("IQK:Start!!!\n");
+	DBG_8192C("IQK Start\n");
 
 	for(i = 0; i < 8; i++)
 	{
